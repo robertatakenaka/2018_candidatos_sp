@@ -245,6 +245,16 @@ def nome_de_dir(s):
     return ''.join([c if c.isalnum() else '-' for c in s])
 
 
+def update_content(content, campo, candidato):
+    if campo == 'link':
+        content += ['- {}'.format(candidato.get(campo, '?'))]
+    elif campo == 'NM_SOCIAL_CANDIDATO':
+        if candidato.get(campo, '?') != '#NULO#':
+            content += ['- {}: {}'.format(campo, candidato.get(campo, '?'))]
+    else:
+        content += ['- {}: {}'.format(campo, candidato.get(campo, '?'))]
+
+
 def save_governador_rst(_path, status, cargo, grupo, candidatos_por_grupo, candidatos_por_numero, campos):
     paths = [nome_de_dir(item) for item in (status[0], status[1], cargo)]
     path = os.path.join(_path, paths[0], paths[1], paths[2])
@@ -266,7 +276,7 @@ def save_governador_rst(_path, status, cargo, grupo, candidatos_por_grupo, candi
             t += 1
             content += ['**{}**'.format(candidato.get('NM_CANDIDATO')) + '\n']
             for campo in campos:
-                content += ['- {}: {}'.format(campo, candidato.get(campo, '?'))]
+                update_content(content, campo, candidato)
             content += ['\n']
 
     filename = os.path.join(path, '{}_{}.rst'.format(nome, t))
@@ -298,7 +308,7 @@ def save_rst(_path, status, cargo, coligacao, grupo, candidatos_por_grupo, candi
             t += 1
             content += ['**{}**'.format(candidato.get('NM_CANDIDATO')) + '\n']
             for campo in campos:
-                content += ['- {}: {}'.format(campo, candidato.get(campo, '?'))]
+                update_content(content, campo, candidato)
             content += ['\n']
 
     filename = os.path.join(path, '{}_{}.rst'.format(nome, t))
