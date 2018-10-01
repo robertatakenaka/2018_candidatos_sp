@@ -123,11 +123,9 @@ COLUMNS = [row[1:-1] for row in ROW0.split(';')]
 
 
 def get_candidatos_por_numero(rows):
-    duplicados = []
-    errados = []
     _rows = {}
     for index, data in enumerate(rows):
-        link = '.. _google: https://www.google.com/search?q={}'.format(data.get('NM_CANDIDATO').replace(' ', '+'))
+        link = '`Google <https://www.google.com/search?q={}>`_'.format(data.get('NM_CANDIDATO').replace(' ', '+'))
         data.update({'link': link, 'index': index})
         _rows[index] = data
     return _rows
@@ -219,7 +217,7 @@ def save_governador_rst(_path, status, cargo, grupo, candidatos_por_grupo, candi
             t += 1
             content += ['**{}**'.format(candidato.get('NM_CANDIDATO')) + '\n']
             for campo in campos:
-                content += ['  - {}: {}'.format(campo, candidato.get(campo, '?'))]
+                content += ['- {}: {}'.format(campo, candidato.get(campo, '?'))]
             content += ['\n']
 
     filename = os.path.join(path, '{}_{}.rst'.format(nome, t))
@@ -251,7 +249,7 @@ def save_rst(_path, status, cargo, coligacao, grupo, candidatos_por_grupo, candi
             t += 1
             content += ['**{}**'.format(candidato.get('NM_CANDIDATO')) + '\n']
             for campo in campos:
-                content += ['  - {}: {}'.format(campo, candidato.get(campo, '?'))]
+                content += ['- {}: {}'.format(campo, candidato.get(campo, '?'))]
             content += ['\n']
 
     filename = os.path.join(path, '{}_{}.rst'.format(nome, t))
